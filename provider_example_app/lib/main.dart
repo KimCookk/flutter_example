@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:provider_app/fish_model.dart';
+import 'package:provider_app/sea_fish_model.dart';
 
 void main() {
   runApp(const ProviderApp());
@@ -11,8 +12,15 @@ class ProviderApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Provider(
-      create: (context) => FishModel(name: 'Salmon', number: 10, size: 'Big'),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+            create: (context) =>
+                FishModel(name: 'Salmon', number: 10, size: 'Big')),
+        ChangeNotifierProvider(
+            create: (context) =>
+                SeaFishModel(name: 'Tuna', tunaNumber: 10, size: 'Middle')),
+      ],
       child: const MaterialApp(
         home: FishOrder(),
       ),
@@ -132,7 +140,7 @@ class SpicyB extends StatelessWidget {
     return Column(
       children: [
         Text(
-          'Fish number: ${Provider.of<FishModel>(context).number}',
+          'Tuna Fish number: ${Provider.of<FishModel>(context).number}',
           style: const TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.bold,
@@ -150,6 +158,12 @@ class SpicyB extends StatelessWidget {
         const SizedBox(
           height: 20,
         ),
+        ElevatedButton(
+            onPressed: () {
+              Provider.of<SeaFishModel>(context, listen: false)
+                  .changeSeaFishNumber();
+            },
+            child: Text('${Provider.of<SeaFishModel>(context).tunaNumber}')),
         const Low()
       ],
     );
@@ -183,9 +197,9 @@ class SpicyC extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return const Column(
+    return Column(
       children: [
-        Text(
+        const Text(
           'Fish number',
           style: TextStyle(
             fontSize: 16,
@@ -193,7 +207,7 @@ class SpicyC extends StatelessWidget {
             color: Colors.red,
           ),
         ),
-        Text(
+        const Text(
           'Fish Size',
           style: TextStyle(
             fontSize: 16,
@@ -201,8 +215,14 @@ class SpicyC extends StatelessWidget {
             color: Colors.red,
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 20,
+        ),
+        ElevatedButton(
+          onPressed: () {
+            Provider.of<FishModel>(context, listen: false).changeFishNumber();
+          },
+          child: const Text('Change Fish Number'),
         ),
       ],
     );

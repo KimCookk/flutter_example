@@ -1,0 +1,1 @@
+ /Users/kts/Desktop/TigerCompany/Study/Flutter/example/provider_example_app/.dart_tool/flutter_build/2aba44b0a03a080a7716e0b73afe9a27/native_assets.yaml: 
